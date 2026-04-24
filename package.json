@@ -1,26 +1,43 @@
 {
-  "name": "sistema-prestamo-tmp",
+  "name": "sistema-prestamo",
   "version": "0.1.0",
   "private": true,
+  "prisma": {
+    "seed": "npx tsx prisma/seed.ts"
+  },
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "dev:clean": "node scripts/clean-next.cjs && next dev",
+    "build": "prisma generate && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:push": "node scripts/prisma-win.cjs db push",
+    "db:studio": "node scripts/prisma-win.cjs studio",
+    "db:seed": "npx tsx prisma/seed.ts",
+    "db:reset": "node scripts/prisma-win.cjs db push && npx tsx prisma/seed.ts"
   },
   "dependencies": {
+    "@prisma/client": "5.22.0",
+    "autoprefixer": "^10.4.20",
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^17.4.2",
+    "next": "14.2.35",
+    "next-auth": "^4.24.14",
+    "postcss": "^8.5.10",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.35"
+    "tailwindcss": "^3.4.1",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
     "eslint": "^8",
-    "eslint-config-next": "14.2.35"
+    "eslint-config-next": "14.2.35",
+    "prisma": "5.22.0",
+    "tsx": "^4.19.4",
+    "typescript": "^5"
   }
 }

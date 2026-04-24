@@ -3,25 +3,84 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: 255 255 255;
+  --foreground: 15 23 42;
+  --brand: 37 99 235;
+  --brand-bright: 59 130 246;
+  --brand-muted: 96 165 250;
+  --surface: 255 255 255;
+  --ring-focus: 59 130 246;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(var(--foreground));
+  background: rgb(240 249 255);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-feature-settings: "ss01" on, "cv11" on;
+}
+
+@layer base {
+  ::selection {
+    background: rgb(186 230 253 / 0.75);
+    color: rgb(23 37 84);
+  }
+}
+
+@layer components {
+  /* Cristal / vidrio líquido: borde claro, blur, brillo interno */
+  .glass {
+    @apply border border-white/50 bg-white/45 shadow-xl shadow-slate-900/10 backdrop-blur-2xl backdrop-saturate-150;
+  }
+  .liquid {
+    @apply glass rounded-3xl;
+    box-shadow: 0 8px 32px rgb(15 23 42 / 0.08), 0 2px 8px rgb(37 99 235 / 0.06), inset 0 1px 0 0
+      rgb(255 255 255 / 0.65);
+  }
+  .surface-card {
+    @apply rounded-2xl border border-slate-200/60 bg-white/90 shadow-sm shadow-slate-900/5 ring-1 ring-slate-900/[0.03] backdrop-blur-sm;
+  }
+  .surface-liquid {
+    @apply liquid border border-sky-200/50 bg-gradient-to-b from-white/70 to-sky-50/40;
+  }
+  .input-field {
+    @apply w-full min-h-[2.75rem] rounded-xl border border-slate-200/80 bg-white/60 px-3 py-2.5 text-base text-slate-900 shadow-inner shadow-slate-900/5 transition placeholder:text-slate-400 sm:text-sm;
+    @apply focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/25;
+  }
+  .btn-primary {
+    @apply inline-flex min-h-[2.75rem] items-center justify-center rounded-xl bg-gradient-to-b from-blue-500 to-blue-600 px-4 py-2.5 text-sm font-medium text-white shadow-md shadow-blue-600/30 transition;
+    @apply hover:from-blue-400 hover:to-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:ring-offset-2;
+    @apply disabled:pointer-events-none disabled:opacity-50;
+  }
+  .link-muted {
+    @apply text-blue-600 underline decoration-sky-300/90 underline-offset-2 transition hover:text-blue-700 hover:decoration-blue-500;
+  }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  .bg-app-mesh {
+    background-color: rgb(240 249 255);
+    background-image: radial-gradient(
+        ellipse 130% 90% at 50% -25%,
+        rgb(125 211 252 / 0.55) 0%,
+        transparent 50%
+      ),
+      radial-gradient(ellipse 80% 60% at 100% 0%, rgb(59 130 246 / 0.18) 0%, transparent 45%),
+      radial-gradient(ellipse 70% 50% at 0% 100%, rgb(14 165 233 / 0.12) 0%, transparent 50%);
+  }
+}
+
+@media print {
+  body {
+    background: white !important;
+  }
+  main {
+    max-width: 100% !important;
+    padding: 0.5rem 1rem !important;
+  }
+  .recibo-papel {
+    break-inside: avoid;
   }
 }

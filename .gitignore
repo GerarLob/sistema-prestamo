@@ -26,10 +26,21 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
+.env
 .env*.local
 
 # vercel
 .vercel
+
+# SQLite local (Prisma)
+/prisma/*.db
+/prisma/*.db-journal
+# Ruta duplicada por error (no usar)
+/prisma/prisma/
+
+# Subidas locales (DPI, etc.); conservar .gitkeep
+/public/uploads/dpi/*
+!/public/uploads/dpi/.gitkeep
 
 # typescript
 *.tsbuildinfo

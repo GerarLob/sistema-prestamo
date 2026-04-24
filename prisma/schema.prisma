@@ -1,0 +1,87 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id           String   @id @default(cuid())
+  usuario      String   @unique
+  passwordHash String
+  nombre       String
+  role         String   @default("usuario")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Cliente {
+  id                String   @id @default(cuid())
+  nombre            String
+  dpi               String   @unique
+  telefono          String?
+  direccion         String?
+  // Ruta pública, p. ej. /uploads/dpi/xxx.pdf
+  dpiDocumentoUrl   String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  prestamos Prestamo[]
+}
+
+model Prestamo {
+  id             String      @id @default(cuid())
+  clienteId      String
+  monto          Decimal
+  tasaAnual      Decimal
+  plazoMeses     Int
+  fechaInicio    DateTime
+  tipoInteres    String
+  cuotaMensual   Decimal
+  totalInteres   Decimal
+  totalAPagar    Decimal
+
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  cliente  Cliente @relation(fields: [clienteId], references: [id], onDelete: Restrict)
+  cuotas   Cuota[]
+  pagos    Pago[]
+
+  @@index([clienteId])
+}
+
+model Cuota {
+  id               String   @id @default(cuid())
+  prestamoId       String
+  numero           Int
+  fechaVencimiento DateTime
+  capital          Decimal
+  interes          Decimal
+  monto            Decimal
+  pagada           Boolean  @default(false)
+
+  prestamo Prestamo @relation(fields: [prestamoId], references: [id], onDelete: Cascade)
+  pago     Pago?
+
+  @@unique([prestamoId, numero])
+  @@index([prestamoId])
+}
+
+model Pago {
+  id          String   @id @default(cuid())
+  prestamoId  String
+  cuotaId     String   @unique
+  monto       Decimal
+  fechaPago   DateTime @default(now())
+  observacion String?
+
+  createdAt   DateTime @default(now())
+
+  prestamo Prestamo @relation(fields: [prestamoId], references: [id], onDelete: Cascade)
+  cuota    Cuota    @relation(fields: [cuotaId], references: [id], onDelete: Cascade)
+
+  @@index([prestamoId])
+}
