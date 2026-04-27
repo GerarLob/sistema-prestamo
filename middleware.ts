@@ -1,3 +1,4 @@
+import "@/lib/ensure-nextauth-url";
 import { withAuth } from "next-auth/middleware";
 
 export default withAuth(

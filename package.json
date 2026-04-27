@@ -8,13 +8,13 @@
   "scripts": {
     "dev": "next dev -p 3020",
     "dev:clean": "node scripts/clean-next.cjs && next dev -p 3020",
-    "build": "prisma generate && next build",
+    "build": "prisma generate && prisma migrate deploy && next build",
     "start": "next start",
     "lint": "next lint",
     "db:push": "node scripts/prisma-win.cjs db push",
     "db:studio": "node scripts/prisma-win.cjs studio",
     "db:seed": "npx tsx prisma/seed.ts",
-    "db:reset": "node scripts/prisma-win.cjs db push && npx tsx prisma/seed.ts"
+    "db:reset": "node scripts/prisma-win.cjs migrate deploy && npx tsx prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "5.22.0",

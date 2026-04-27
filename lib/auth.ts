@@ -1,3 +1,4 @@
+import "@/lib/ensure-nextauth-url";
 import { prisma } from "@/lib/prisma";
 import type { UserRole } from "@/lib/enums";
 import type { User } from "next-auth";
@@ -78,7 +79,7 @@ export const authOptions: NextAuthOptions = {
             const n = claves[0] ?? "";
             const raw = await prisma.$queryRaw<Fila[]>`
               SELECT id, usuario, "passwordHash", nombre, role
-              FROM Usuario
+              FROM "Usuario"
               WHERE LOWER(usuario) = LOWER(${n})
               LIMIT 5`;
             candidatos = raw;
