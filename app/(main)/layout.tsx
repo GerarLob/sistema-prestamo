@@ -4,6 +4,9 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { ReactNode } from "react";
 
+/** No pre-renderizar con Prisma en build (Vercel/CI sin `dev.db` o tablas aún no creadas). */
+export const dynamic = "force-dynamic";
+
 export default async function MainLayout({ children }: { children: ReactNode }) {
   let session = null;
   try {
