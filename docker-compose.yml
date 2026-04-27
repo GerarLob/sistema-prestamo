@@ -1,0 +1,16 @@
+# Desarrollo local: PostgreSQL para Prisma (no commitees credenciales reales a .env en producción)
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: prestamo_dev
+      POSTGRES_DB: prestamos
+    ports:
+      - "5433:5432"
+    volumes:
+      - prestamos_pg_data:/var/lib/postgresql/data
+
+volumes:
+  prestamos_pg_data:

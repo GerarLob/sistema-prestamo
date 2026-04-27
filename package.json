@@ -11,6 +11,8 @@
     "build": "node scripts/check-database-url.cjs && prisma generate && prisma migrate deploy && next build",
     "start": "next start",
     "lint": "next lint",
+    "db:up": "docker compose up -d",
+    "db:down": "docker compose down",
     "db:push": "node scripts/prisma-win.cjs db push",
     "db:studio": "node scripts/prisma-win.cjs studio",
     "db:seed": "npx tsx prisma/seed.ts",
