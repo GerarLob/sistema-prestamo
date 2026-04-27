@@ -6,8 +6,8 @@
     "seed": "npx tsx prisma/seed.ts"
   },
   "scripts": {
-    "dev": "next dev",
-    "dev:clean": "node scripts/clean-next.cjs && next dev",
+    "dev": "next dev -p 3020",
+    "dev:clean": "node scripts/clean-next.cjs && next dev -p 3020",
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
@@ -21,6 +21,8 @@
     "autoprefixer": "^10.4.20",
     "bcryptjs": "^3.0.3",
     "dotenv": "^17.4.2",
+    "jspdf": "^4.2.1",
+    "jspdf-autotable": "^5.0.7",
     "next": "14.2.35",
     "next-auth": "^4.24.14",
     "postcss": "^8.5.10",

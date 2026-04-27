@@ -7,7 +7,7 @@ if (process.env.NODE_ENV === "development") {
     process.env.AUTH_SECRET = process.env.NEXTAUTH_SECRET;
   }
   if (!process.env.NEXTAUTH_URL) {
-    process.env.NEXTAUTH_URL = "http://localhost:3000";
+    process.env.NEXTAUTH_URL = "http://localhost:3020";
   }
 }
 

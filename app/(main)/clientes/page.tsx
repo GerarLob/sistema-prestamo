@@ -1,16 +1,6 @@
+import { formatearDpi } from "@/lib/formatear-dpi";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
-
-function formatearDpi(dpi: string) {
-  const d = dpi.replace(/\D/g, "");
-  if (d.length === 13) {
-    return `${d.slice(0, 4)} ${d.slice(4, 9)} ${d.slice(9, 13)}`;
-  }
-  if (d.length > 0) {
-    return d.replace(/(\d{4})(?=\d)/g, "$1 ").trim();
-  }
-  return dpi;
-}
 
 function iconoDocumento(adjunto: boolean) {
   if (adjunto) {
@@ -68,12 +58,24 @@ export default async function ClientesPage() {
             </p>
           </div>
         </div>
-        <Link
-          href="/clientes/nuevo"
-          className="btn-primary inline-flex w-full min-h-[2.75rem] shrink-0 items-center justify-center sm:w-auto"
-        >
-          <span className="mr-1.5 inline-block">+</span> Nuevo cliente
-        </Link>
+        <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-stretch sm:justify-end sm:gap-3">
+          <a
+            href="/api/clientes/export/pdf"
+            className="inline-flex min-h-[2.75rem] shrink-0 items-center justify-center gap-2 rounded-xl border border-slate-200/90 bg-white px-4 py-2.5 text-sm font-medium text-slate-800 shadow-sm transition hover:border-slate-300 hover:bg-slate-50/90"
+            title="Descargar listado en PDF"
+          >
+            <svg className="h-4 w-4 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75} aria-hidden>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+            </svg>
+            Descargar PDF
+          </a>
+          <Link
+            href="/clientes/nuevo"
+            className="btn-primary inline-flex w-full min-h-[2.75rem] shrink-0 items-center justify-center sm:w-auto"
+          >
+            <span className="mr-1.5 inline-block">+</span> Nuevo cliente
+          </Link>
+        </div>
       </div>
 
       {clientes.length === 0 ? (
